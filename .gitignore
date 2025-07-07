@@ -13,6 +13,7 @@ work_dirs/
 vllm/*
 deploy/
 .vscode/
+.ides/
 
 !output/**/*.py
 !data/**/*.py
