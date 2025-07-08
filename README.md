@@ -234,28 +234,6 @@ The program will generate files in `output/timestamp/` directory:
 - `tree_structure.txt` - Human-readable tree structure visualization
 - `result.jsonl` - Final generated data samples (one JSON object per line)
 
-### ▶️ Example Usage
-
-Currently, the implementation requires running main.py directly. Future versions may support programmatic API calls:
-
-```python
-# Run after modifying configurations in main.py
-import asyncio
-from main import run_generation_process
-
-# Run generation process asynchronously
-asyncio.run(
-    run_generation_process(
-        log_file="logs/generation.log",
-        output_file="output/output.json", 
-        tree_structure_file="output/tree_structure.txt",
-        result_file="output/result.jsonl",
-        backend="openai",  # or "azure", "vllm"
-        use_api_pool=False
-    )
-)
-```
-
 ### 🧩 Custom Data Domains
 
 To create generators for new task domains, reference existing generator files:
