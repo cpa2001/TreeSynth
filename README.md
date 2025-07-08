@@ -1,4 +1,4 @@
-# [TreeSynth: Synthesizing Diverse Data from Scratch via Tree-Guided Subspace Partitioning](https://arxiv.org/pdf/2503.17195)
+# 🌳 [TreeSynth: Synthesizing Diverse Data from Scratch via Tree-Guided Subspace Partitioning](https://arxiv.org/pdf/2503.17195)
 
 <div align="center">
   <a href="https://arxiv.org/pdf/2503.17195"><img src="https://img.shields.io/badge/Paper-arXiv-red" alt="arXiv"></a>
@@ -7,12 +7,16 @@
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/Code%20License-MIT-blue" alt="Code License"></a>
 </div>
 
-## News
+<div align="center">
+<img src="./image/cartoon_tree.jpg" width="100%">
+</div>
+
+## 🚀 News
 
 - **[5/16/2025]** 🚀 We're excited to announce the release of our new paper and the initial public availability of its corresponding code.
 
 
-## Introduction
+## 💡 Introduction
 We introduce **TREESYNTH**, a tree-guided subspace-based data synthesis approach inspired by decision trees. It constructs a spatial partitioning tree to recursively divide a task-specific full data space (i.e., root node) into numerous atomic subspaces (i.e., leaf nodes) with mutually exclusive and exhaustive attributes to ensure both distinctiveness and comprehensiveness before synthesizing samples within each atomic subspace.
 <div align="center">
 <img src="./image/Tree.jpg" width="90%">
@@ -23,22 +27,22 @@ This globally dividing-and-synthesizing method finally collects subspace samples
 </div>
 
 
-## Performance
-### Excellent Data Diversity
+## 📊 Performance
+### 🌈 Excellent Data Diversity
 TreeSynth exhibits substantially better data diversity and more comprehensive coverage across various tasks and models than both human-curated datasets and peer synthetic methods.
 <div align="center">
 <img src="./image/Diversity.jpg" width="100%">
 </div>
 <small><em> t-SNE visualization of LLaMA3.3-70B-Instruct-synthesized datasets for various methods across GSM8K, MATH, and Code Alpaca styles.</em></small>
 
-### Superior Downstream Performance
+### 🏆 Superior Downstream Performance
 Models trained on TreeSynth data consistently outperform those trained on both human-crafted datasets and synthetic baselines across all the tasks, foundation and generation models
 <div align="center">
 <img src="./image/performace.jpg" width="100%">
 </div>
 <small><em>Model performance and data diversity comparison of various methods with GPT-4o-powered data synthesis.</em></small>
 
-### Scalable Data Synthesis with Quality Preservation
+### 📈 Scalable Data Synthesis with Quality Preservation
 With the global data spatial perspective guided by tree structure, TreeSynth effectively scales datasets while preserving data quality, suggesting great scalability wherein downstream performance consistently improves with increased data volume.
 <div align="center">
 <img src="./image/scaling.jpg" width="100%">
@@ -46,34 +50,24 @@ With the global data spatial perspective guided by tree structure, TreeSynth eff
 <small><em>Model performance trends across data scales for different methods powered by GPT-4o.</em></small>
 
 
+## ⚡ Quick Start
 
-## Data Release
-### Synthetic Data Samples
-* **100,000 GSM8K-style questions**
-* **100,000 MATH questions**
-* **100,000 Code Alpaca-style questions**
-* **100,000 SimpleTom-style questions**
-
-One can also quickly preview these data at [huggingface](https://huggingface.co/datasets).
-
-## Quick Start
-
-### Prerequisites
+### 🛠️ Prerequisites
 
 - Python 3.8+
 <!-- - Required dependencies (see `requirements.txt`) -->
 - API access to OpenAI/Azure or local model deployment via vLLM
 
-### Installation
+### 📥 Installation
 
 ```bash
 git clone https://github.com/cpa2001/TreeSynth.git
 cd TreeSynth
 ```
 
-### Configuration
+### ⚙️ Configuration
 
-#### 1. Backend Setup
+#### 1️⃣ Backend Setup
 
 TreeSynth supports three backend configurations. Edit `config.py` to configure your preferred backend:
 
@@ -115,7 +109,7 @@ For vLLM deployment, use the provided script:
 bash vllm.sh
 ```
 
-#### 2. Tree Generation Parameters
+#### 2️⃣ Tree Generation Parameters
 
 Configure the core TreeSynth parameters in `DEFAULT_CONFIG`:
 
@@ -132,7 +126,7 @@ DEFAULT_CONFIG = {
 }
 ```
 
-#### 3. API Pool Configuration (Optional)
+#### 3️⃣ API Pool Configuration (Optional)
 
 For high-throughput synthesis, configure multiple API endpoints:
 
@@ -154,7 +148,7 @@ OPENAI_API_POOL = [
 ]
 ```
 
-### Running TreeSynth
+### ▶️ Running TreeSynth
 
 Execute the data generation pipeline:
 
@@ -163,7 +157,7 @@ Execute the data generation pipeline:
 python main.py --backend openai --task_type math
 ```
 
-### Example Usage
+### ▶️ Example Usage
 
 ```python
 from treesynth import TreeSynth
@@ -181,7 +175,7 @@ dataset = synthesizer.generate_dataset()
 print(f"Generated {len(dataset)} diverse samples")
 ```
 
-### Advanced Configuration
+### 🧩 Advanced Configuration
 
 For custom task domains, modify the task-specific prompts and templates:
 
@@ -197,7 +191,7 @@ CUSTOM_TASK_CONFIG = {
 
 
 
-## Overview of TreeSynth
+## 🗺️ Overview of TreeSynth
 TreeSynth consists of two key stages: data space partitioning and subspace data synthesis.
 
 During the former phase, TreeSynth employs a spatial partitioning tree to recursively divide a task-specific whole data space (i.e., root node defined by textual descriptions) into numerous atomic subspaces (i.e., leaf nodes). These subspaces are characterized by mutually exclusive and exhaustive attribute values to ensure both distinctiveness and diversity.
@@ -208,7 +202,7 @@ In the subsequent subspace data synthesis phase, samples are generated within ea
 </div>
 <small><em>A spatial partitioning tree visualization of TreeSynth, exemplified through GSM8K-style data synthesis.</em></small>
 
-## Citation
+## 📚 Citation
 If you found our work useful, please consider starring and citing. Thank you!
 ```latex
 @article{wang2025treesynth,
