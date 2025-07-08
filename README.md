@@ -55,21 +55,41 @@ With the global data spatial perspective guided by tree structure, TreeSynth eff
 ### 🛠️ Prerequisites
 
 - Python 3.8+
-<!-- - Required dependencies (see `requirements.txt`) -->
 - API access to OpenAI/Azure or local model deployment via vLLM
+- Required Python dependencies (see installation below)
 
 ### 📥 Installation
 
 ```bash
 git clone https://github.com/cpa2001/TreeSynth.git
 cd TreeSynth
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 📁 Project File Structure
+
+```
+TreeSynth/
+├── config.py                    # Configuration: API settings, generation parameters
+├── main.py                      # Main entry point: data generation workflow control
+├── generator_math_async.py      # MATH style dataset generator
+├── generator_code_async.py      # Code Alpaca style dataset generator
+├── generator_gsm_async.py       # GSM8K style dataset generator
+├── generator_mental_async.py    # SimpleToM style dataset generator
+├── generator_mental_positive.py # Positive SimpleToM style dataset generator
+├── balance_mental.py            # SimpleToM style data balancing tool
+├── vllm_engine.sh              # vLLM local deployment script
+├── vllm_chat_template_llama3.1_json.jinja  # vLLM chat template
+└── image/                       # Documentation images directory
 ```
 
 ### ⚙️ Configuration
 
 #### 1️⃣ Backend Setup
 
-TreeSynth supports three backend configurations. Edit `config.py` to configure your preferred backend:
+Edit `config.py` to configure your API backend:
 
 **Option A: OpenAI API**
 ```python
@@ -104,14 +124,14 @@ BACKEND_CONFIGS = {
 }
 ```
 
-For vLLM deployment, use the provided script:
+For vLLM local deployment, use the provided script:
 ```bash
-bash vllm.sh
+bash vllm_engine.sh
 ```
 
 #### 2️⃣ Tree Generation Parameters
 
-Configure the core TreeSynth parameters in `DEFAULT_CONFIG`:
+Configure core TreeSynth parameters in `DEFAULT_CONFIG` within `config.py`:
 
 ```python
 DEFAULT_CONFIG = {
@@ -128,7 +148,7 @@ DEFAULT_CONFIG = {
 
 #### 3️⃣ API Pool Configuration (Optional)
 
-For high-throughput synthesis, configure multiple API endpoints:
+For high-throughput data generation, configure multiple API endpoints:
 
 ```python
 # Multiple Azure endpoints for load balancing
@@ -148,46 +168,102 @@ OPENAI_API_POOL = [
 ]
 ```
 
+### 🔄 Switching Data Generation Styles
+
+TreeSynth supports multiple data styles. You need to manually modify the import statement in `main.py`:
+
+#### 1️⃣ MATH Dataset Style
+```python
+# Modify import in main.py
+from generator_math_async import LLMInference, APIPool, TreeNode, inject_runtime_to_tree
+```
+
+#### 2️⃣ Code Alpaca Style
+```python
+# Modify import in main.py
+from generator_code_async import LLMInference, APIPool, TreeNode, inject_runtime_to_tree
+```
+
+#### 3️⃣ GSM8K Style
+```python
+# Modify import in main.py
+from generator_gsm_async import LLMInference, APIPool, TreeNode, inject_runtime_to_tree
+```
+
 ### ▶️ Running TreeSynth
 
-Execute the data generation pipeline:
+#### Step-by-Step Guide:
+
+1. **Configure API Keys**:
+   - Edit `BACKEND_CONFIGS` in `config.py`
+   - Replace API keys, endpoints with your actual configurations
+
+2. **Select Backend**:
+   - Edit lines 175-184 in `main.py`
+   - Comment out unused backends, enable the one you want to use
+   ```python
+   # Use vLLM backend
+   # asyncio.run(run_generation_process(..., backend="vllm", ...))
+   
+   # Use OpenAI backend  
+   asyncio.run(run_generation_process(..., backend="openai", ...))
+   ```
+
+3. **Choose Data Style**:
+   - Modify the import statement on line 13 of `main.py`:
+   ```python
+   # Math competition problems
+   from generator_math_async import LLMInference, APIPool, TreeNode, inject_runtime_to_tree
+   
+   # Or code generation  
+   # from generator_code_async import LLMInference, APIPool, TreeNode, inject_runtime_to_tree
+   ```
+
+4. **Run Generation**:
 
 ```bash
-# Generate tree structure and synthesize data
-python main.py --backend openai --task_type math
+# Execute data generation pipeline
+python main.py
 ```
+
+#### Output Files:
+
+The program will generate files in `output/timestamp/` directory:
+- `generation.log` - Detailed generation logs
+- `output.json` - Complete tree structure and intermediate results
+- `tree_structure.txt` - Human-readable tree structure visualization
+- `result.jsonl` - Final generated data samples (one JSON object per line)
 
 ### ▶️ Example Usage
 
-```python
-from treesynth import TreeSynth
+Currently, the implementation requires running main.py directly. Future versions may support programmatic API calls:
 
-# Initialize TreeSynth with configuration
-synthesizer = TreeSynth(
-    backend="openai",           # or "azure", "vllm"
-    max_depth=4,
-    num_samples_per_node=10,
-    task_type="math"
+```python
+# Run after modifying configurations in main.py
+import asyncio
+from main import run_generation_process
+
+# Run generation process asynchronously
+asyncio.run(
+    run_generation_process(
+        log_file="logs/generation.log",
+        output_file="output/output.json", 
+        tree_structure_file="output/tree_structure.txt",
+        result_file="output/result.jsonl",
+        backend="openai",  # or "azure", "vllm"
+        use_api_pool=False
+    )
 )
-
-# Generate diverse dataset
-dataset = synthesizer.generate_dataset()
-print(f"Generated {len(dataset)} diverse samples")
 ```
 
-### 🧩 Advanced Configuration
+### 🧩 Custom Data Domains
 
-For custom task domains, modify the task-specific prompts and templates:
+To create generators for new task domains, reference existing generator files:
 
-```python
-# Custom task configuration
-CUSTOM_TASK_CONFIG = {
-    "task_name": "custom_domain",
-    "root_description": "Your domain description",
-    "attribute_types": ["type1", "type2", "type3"],
-    "sample_template": "Your sample generation template"
-}
-```
+1. **Copy Existing Generator**: Use `generator_math_async.py` as template
+2. **Modify Prompt Templates**: Edit prompts in `format_dim_prompt()`, `format_expand_prompt` and `format_gen_prompt()`
+3. **Adjust Parsing Logic**: Modify regex pattern matching
+4. **Update Imports**: Import the new generator in `main.py`
 
 
 

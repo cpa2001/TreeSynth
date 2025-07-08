@@ -1,0 +1,20 @@
+# TreeSynth Project Dependencies
+
+# Core AI model API calls
+openai>=1.3.0
+
+# Deep learning frameworks
+torch>=2.0.0
+numpy>=1.21.0
+
+# Async HTTP requests
+httpx>=0.24.0
+
+# Progress bars and UI
+tqdm>=4.64.0
+
+# Tree structure visualization
+PrettyPrint>=0.1.0
+
+# Standard library modules (no installation needed)
+# json, os, sys, shutil, logging, datetime, signal, threading, time, re, collections, concurrent.futures, random, asyncio 
