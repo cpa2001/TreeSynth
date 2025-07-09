@@ -1,4 +1,8 @@
+<div align="center">
+
 # 🌳 [TreeSynth: Synthesizing Diverse Data from Scratch via Tree-Guided Subspace Partitioning](https://arxiv.org/pdf/2503.17195)
+
+</div>
 
 <div align="center">
   <a href="https://arxiv.org/pdf/2503.17195"><img src="https://img.shields.io/badge/Paper-arXiv-red" alt="arXiv"></a>
@@ -22,9 +26,19 @@ We introduce **TREESYNTH**, a tree-guided subspace-based data synthesis approach
 <img src="./image/Tree.jpg" width="90%">
 </div>
 This globally dividing-and-synthesizing method finally collects subspace samples into a comprehensive dataset, effectively circumventing repetition and space collapse to ensure the diversity of large-scale data synthesis. 
+
+### 🔧 Algorithm Overview
+The core TreeSynth algorithm follows a systematic tree-guided approach for data synthesis:
+
+<div align="center">
+<img src="./image/pseudo_code.png" width="80%">
+</div>
+<small><em>Pseudocode of the TreeSynth algorithm showing the tree construction and data synthesis process.</em></small>
+
 <div align="center">
 <img src="./image/TreeSynth.jpg" width="100%">
 </div>
+<small><em>Schematic illustrating TreeSynth’s advantage in spatial partitioning.</em></small>
 
 
 ## 📊 Performance
@@ -38,17 +52,43 @@ TreeSynth exhibits substantially better data diversity and more comprehensive co
 ### 🏆 Superior Downstream Performance
 Models trained on TreeSynth data consistently outperform those trained on both human-crafted datasets and synthetic baselines across all the tasks, foundation and generation models
 <div align="center">
-<img src="./image/performace.jpg" width="100%">
+<img src="./image/performance_GPT.jpg" width="100%">
 </div>
 <small><em>Model performance and data diversity comparison of various methods with GPT-4o-powered data synthesis.</em></small>
 
 ### 📈 Scalable Data Synthesis with Quality Preservation
 With the global data spatial perspective guided by tree structure, TreeSynth effectively scales datasets while preserving data quality, suggesting great scalability wherein downstream performance consistently improves with increased data volume.
+
 <div align="center">
-<img src="./image/scaling.jpg" width="100%">
+<img src="./image/scaling_GPT.png" width="100%">
 </div>
 <small><em>Model performance trends across data scales for different methods powered by GPT-4o.</em></small>
 
+<details><summary>Click to expand performance results of other models using TreeSynth</summary>
+
+#### Performance results using TreeSynth with LLaMA 3.3 70B Instruct for data synthesize
+<div align="center">
+<img src="./image/performance_LLaMA.png" width="100%">
+</div>
+<small><em>Model performance and data diversity comparison of various methods with LLaMA3.3 70b Instruct-powered data synthesis.</em></small>
+
+<div align="center">
+<img src="./image/scaling_LLaMA.png" width="100%">
+</div>
+<small><em>Model performance trends across data scales for different methods powered by LLaMA3.3 70b Instruct.</em></small>
+
+#### Performance results using TreeSynth with Qwen 2.5 72B Instruct for data synthesize
+<div align="center">
+<img src="./image/performance_Qwen.png" width="100%">
+</div>
+<small><em>Model performance and data diversity comparison of various methods with Qwen2.5 72b Instruct-powered data synthesis.</em></small>
+
+<div align="center">
+<img src="./image/scaling_Qwen.png" width="100%">
+</div>
+<small><em>Model performance trends across data scales for different methods powered by Qwen2.5 70b Instruct.</em></small>
+
+</details>
 
 ## ⚡ Quick Start
 
@@ -80,7 +120,7 @@ TreeSynth/
 ├── generator_mental_async.py    # SimpleToM style dataset generator
 ├── generator_mental_positive.py # Positive SimpleToM style dataset generator
 ├── balance_mental.py            # SimpleToM style data balancing tool
-├── vllm_engine.sh              # vLLM local deployment script
+├── vllm_engine.sh               # vLLM local deployment script
 ├── vllm_chat_template_llama3.1_json.jinja  # vLLM chat template
 └── image/                       # Documentation images directory
 ```
