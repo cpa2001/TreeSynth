@@ -50,7 +50,7 @@ TreeSynth exhibits substantially better data diversity and more comprehensive co
 <small><em> t-SNE visualization of LLaMA3.3-70B-Instruct-synthesized datasets for various methods across GSM8K, MATH, and Code Alpaca styles.</em></small>
 
 ### 🏆 Superior Downstream Performance
-Models trained on TreeSynth data consistently outperform those trained on both human-crafted datasets and synthetic baselines across all the tasks, foundation and generation models
+Models trained on TreeSynth data consistently outperform those trained on both human-crafted datasets and synthetic baselines across all the tasks, foundation and generation models.
 <div align="center">
 <img src="./image/performance_GPT.jpg" width="100%">
 </div>
