@@ -14,7 +14,7 @@ httpx>=0.24.0
 tqdm>=4.64.0
 
 # Tree structure visualization
-PrettyPrint>=0.1.0
+PrettyPrintTree>=2.0.1
 
 # Standard library modules (no installation needed)
 # json, os, sys, shutil, logging, datetime, signal, threading, time, re, collections, concurrent.futures, random, asyncio 
